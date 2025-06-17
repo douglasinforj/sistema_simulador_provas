@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 import uuid
 
 class Categoria(models.Model):
@@ -11,7 +10,7 @@ class Categoria(models.Model):
 class Questao(models.Model):
     enunciado = models.TextField()
     imagem = models.ImageField(upload_to='questoes/', blank=True, null=True)
-    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -27,9 +26,10 @@ class Alternativa(models.Model):
 
 class Prova(models.Model):
     candidato_nome = models.CharField(max_length=200)
-    candidato_cpf = models.CharField(max_length=14, unique=True)
+    candidato_cpf = models.CharField(max_length=14)
     candidato_email = models.EmailField()
     candidato_telefone = models.CharField(max_length=15)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
     questoes = models.ManyToManyField(Questao)
     nota = models.FloatField(null=True, blank=True)
     data_realizacao = models.DateTimeField(auto_now_add=True)
@@ -42,18 +42,20 @@ class Prova(models.Model):
             return 0
         acertos = 0
         for questao in self.questoes.all():
-            respostas_corretas = questao.alternativas.filter(is_correct=True)
-            respostas_marcadas = Resposta.objects.filter(prova=self, alternativa__questao=questao)
-            if respostas_marcadas.count() == respostas_corretas.count():
-                todas_corretas = all(r.alternativa.is_correct for r in respostas_marcadas)
-                if todas_corretas and respostas_marcadas.exists():
-                    acertos += 1
+            respostas_corretas = set(questao.alternativas.filter(is_correct=True).values_list('id', flat=True))
+            escolhas_candidato = set(EscolhaCandidato.objects.filter(prova=self, alternativa__questao=questao).values_list('alternativa_id', flat=True))
+            if escolhas_candidato == respostas_corretas and escolhas_candidato:
+                acertos += 1
         return (acertos / total_questoes) * 10
 
     def __str__(self):
         return f"Prova de {self.candidato_nome} - {self.data_realizacao}"
+    
+    class Meta:
+        unique_together = ('candidato_cpf', 'categoria')
+    
 
-class Resposta(models.Model):
+class EscolhaCandidato(models.Model):
     prova = models.ForeignKey(Prova, on_delete=models.CASCADE)
     alternativa = models.ForeignKey(Alternativa, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

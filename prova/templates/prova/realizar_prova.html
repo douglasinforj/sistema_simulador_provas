@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Prova - {{ prova.candidato_nome }} ({{ prova.categoria.nome }})</h2>
+    <div id="timer" class="mb-3">Tempo restante: <span id="time">60:00</span></div>
+    <form method="post" id="provaForm">
+        {% csrf_token %}
+        {% for questao in questoes %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Questão {{ forloop.counter }}</h5>
+                    <p class="card-text">{{ questao.enunciado }}</p>
+                    {% if questao.imagem %}
+                        <img src="{{ questao.imagem.url }}" alt="Imagem da questão" class="img-fluid mb-3" style="max-width: 300px;">
+                    {% endif %}
+                    {% for alternativa in questao.alternativas.all %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="questao_{{ questao.id }}" value="{{ alternativa.id }}" id="alternativa_{{ alternativa.id }}">
+                            <label class="form-check-label" for="alternativa_{{ alternativa.id }}">{{ alternativa.texto }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Finalizar Prova</button>
+    </form>
+    <script>
+        let timeLeft = {{ tempo_limite }};
+        const timerElement = document.getElementById('time');
+        const form = document.getElementById('provaForm');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) {
+                form.submit();
+            } else {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            }
+        }
+        updateTimer();
+    </script>
+{% endblock %}

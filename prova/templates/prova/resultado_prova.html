@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Resultado da Prova</h2>
+    <p><strong>Nome:</strong> {{ prova.candidato_nome }}</p>
+    <p><strong>CPF:</strong> {{ prova.candidato_cpf }}</p>
+    <p><strong>Categoria:</strong> {{ prova.categoria.nome }}</p>
+    <p><strong>Nota:</strong> {{ prova.nota|floatformat:2 }}</p>
+    <p><strong>Data:</strong> {{ prova.data_realizacao }}</p>
+    <a href="{% url 'iniciar_prova' %}" class="btn btn-primary">Nova Prova</a>
+{% endblock %}
