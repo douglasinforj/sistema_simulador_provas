@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Login Administrativo</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb">
+            <label for="username" class="form-label">Usuário</label>
+            <input type="text" class="form-label" id="username" name="username" required>
+        </div>
+        <div class="mb">
+            <label for="password" class="form-label">Usuário</label>
+            <input type="password" class="form-label" id="password" name="password" required>
+        </div>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                Usuário ou senha inválida
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Entrar</button>
+
+    </form>
+
+</div>
+
+
+{% endblock %}

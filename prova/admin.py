@@ -13,7 +13,7 @@ class QuestaoAdmin(admin.ModelAdmin):
     list_filter = ('categoria',)
 
 class ProvaAdmin(admin.ModelAdmin):
-    list_display = ('candidato_nome', 'candidato_cpf', 'categoria', 'nota', 'data_realizacao')
+    list_display = ('candidato_nome', 'candidato_cpf', 'categoria', 'nota', 'data_realizacao','uuid')
     search_fields = ('candidato_nome', 'candidato_cpf', 'candidato_email')
     list_filter = ('categoria',)
 

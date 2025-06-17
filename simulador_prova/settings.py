@@ -136,3 +136,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+#Adicionando login
+LOGIN_REDIRECT_URL = '/ranking/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
