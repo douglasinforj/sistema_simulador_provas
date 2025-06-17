@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'iniciar_prova' %}">Simulador de Provas</a>
             {% if user.is_authenticated %}
-                <a class="nav-link" href="{% url 'ranking' %}">Ranking e Certificados</a>
+                <a class="nav-link" href="{% url 'administrador' %}">Adiministração</a>
                 <form method="post" action="{% url 'logout' %}" class="m-0 p-0">
                                 {% csrf_token %}
                                 <button type="submit" class="btn nav-link p-0" style="border: none; background: none; color: black;">

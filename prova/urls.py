@@ -7,5 +7,6 @@ urlpatterns = [
     path('resultado/<uuid:prova_uuid>/', views.resultado_prova, name='resultado_prova'),
     path('ranking/', views.ranking, name='ranking'),
     path('certificado/<uuid:prova_uuid>/', views.emitir_certificado, name='emitir_certificado'),
+    path('administrador/', views.administrador, name='administrador'),
     
 ]

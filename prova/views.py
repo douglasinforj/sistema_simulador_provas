@@ -109,7 +109,9 @@ def ranking(request):
     return render(request, 'prova/ranking.html', {'provas': provas})
 
 
-
+@login_required
+def administrador(request):
+    return render(request, 'prova/administrator.html')
 
 @login_required
 def emitir_certificado(request, prova_uuid):

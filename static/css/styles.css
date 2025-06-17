@@ -1,5 +1,6 @@
 body {
     font-family: Arial, sans-serif;
+  
 }
 .card {
     border-radius: 10px;
@@ -91,6 +92,29 @@ body {
     margin-top: 20px;
     font-style: italic;
 }
+
+/* Estilos do Painel Administrativo */
+.admin-card {
+    transition: transform 0.2s;
+}
+
+.admin-card:hover {
+    transform: scale(1.05);
+}
+
+
+
+.admin-card-img {
+    width: 100%;
+    height: 200px; /* Altura ajustada para proporção de 800x600 */
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+
+
 
 /* Ocultar o botão "Voltar ao Ranking" na impressão */
 @media print {

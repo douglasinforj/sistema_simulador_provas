@@ -139,6 +139,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 
 #Adicionando login
-LOGIN_REDIRECT_URL = '/ranking/'
+LOGIN_REDIRECT_URL = '/administrador/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
