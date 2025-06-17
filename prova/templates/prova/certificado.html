@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="certificate-container">
+    <div class="certificate-border">
+        <div class="certificate-content">
+            <img src="{% static 'images/cisco.png' %}" alt="Logo" class="certificate-logo">
+            <h1 class="certificate-title">CERTIFICADO DE CONCLUSÃO</h1>
+            <h3 class="certificate-subtitle">Simulador de Provas</h3>
+            <p class="certificate-text">
+                Certificamos que <strong>{{ prova.candidato_nome }}</strong>, portador do CPF <strong>{{ prova.candidato_cpf }}</strong>,
+                concluiu com êxito a prova da categoria <strong>{{ prova.categoria.nome }}</strong>,
+                obtendo a nota <strong>{{ prova.nota|floatformat:2 }}</strong> em avaliação realizada em <strong>{{ data_formatada }}</strong>.
+                Este certificado atesta a participação e desempenho do candidato, com carga horária de 4 horas.
+            </p>
+            <div class="certificate-signatures">
+                <div class="signature">
+                    <hr>
+                    <p>Diretor Acadêmico</p>
+                </div>
+                <div class="signature">
+                    <hr>
+                    <p>Coordenador do Curso</p>
+                </div>
+            </div>
+            <p class="certificate-id">Número do Certificado: {{ prova.uuid }}</p>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a href="{% url 'ranking' %}" class="btn btn-primary">Voltar ao Ranking</a>
+    </div>
+</div>
+{% endblock %}

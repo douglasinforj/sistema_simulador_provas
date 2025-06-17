@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Ranking de Candidatos</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Categoria</th>
+                <th>Nota</th>
+                <th>Data</th>
+                <th>Certificado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prova in provas %}
+                <tr>
+                    <td>{{ prova.candidato_nome }}</td>
+                    <td>{{ prova.candidato_cpf }}</td>
+                    <td>{{ prova.categoria.nome }}</td>
+                    <td>{{ prova.nota|floatformat:2 }}</td>
+                    <td>{{ prova.data_realizacao }}</td>
+                    <td>
+                        <a href="{% url 'emitir_certificado' prova.uuid %}" class="btn btn-sm btn-success">Visualizar</a>
+                        <a href="{% url 'emitir_certificado' prova.uuid %}?pdf=true" class="btn btn-sm btn-primary">PDF</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

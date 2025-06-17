@@ -1,7 +1,7 @@
-body{
+body {
     font-family: Arial, sans-serif;
 }
-.card{
+.card {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -16,4 +16,93 @@ body{
     font-size: 1.2em;
     font-weight: bold;
     color: #dc3545;
+}
+
+/* Estilos do Certificado */
+.certificate-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.certificate-border {
+    border: 5px solid #FFD700; /* Borda dourada */
+    background-color: #F8F8F8;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.certificate-content {
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.certificate-logo {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.certificate-title {
+    font-size: 36px;
+    color: #003087; /* Azul escuro */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.certificate-subtitle {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.certificate-text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.certificate-signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 0 50px;
+}
+
+.signature {
+    width: 40%;
+    text-align: center;
+}
+
+.signature hr {
+    border: 0;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.signature p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.certificate-id {
+    font-size: 12px;
+    color: #666;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+/* Ocultar o botão "Voltar ao Ranking" na impressão */
+@media print {
+    .text-center.mt-3 {
+        display: none;
+    }
+    /* Opcional: Ajustar margens para impressão */
+    .certificate-container {
+        padding: 0;
+        margin: 0;
+    }
+    body {
+        margin: 0;
+    }
 }
