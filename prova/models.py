@@ -13,6 +13,10 @@ class Questao(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = "Questão"  # Optional: Human-readable singular name
+        verbose_name_plural = "Questões" 
+
     def __str__(self):
         return self.enunciado[:50]
 

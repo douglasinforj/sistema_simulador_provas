@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Relatórios de Desempenho</h2>
+    <p>Índice de acertos por categoria, considerando todas as provas realizadas.</p>
+    <div class="card">
+        <div class="card-body">
+            <canvas id="acertosChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('acertosChart').getContext('2d');
+        const data = {{ data|safe }};
+        const labels = data.map(item => item.categoria);
+        const indices = data.map(item => item.indice);
+        const colors = [
+            'rgba(54, 162, 235, 0.6)',  // Azul
+            'rgba(255, 99, 132, 0.6)',  // Vermelho
+            'rgba(75, 192, 192, 0.6)',  // Ciano
+            'rgba(255, 159, 64, 0.6)',  // Laranja
+            'rgba(153, 102, 255, 0.6)'  // Roxo
+        ];
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Índice de Acertos (%)',
+                    data: indices,
+                    backgroundColor: colors.slice(0, labels.length),
+                    borderColor: colors.slice(0, labels.length).map(c => c.replace('0.6', '1')),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Índice de Acertos (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Categoria'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

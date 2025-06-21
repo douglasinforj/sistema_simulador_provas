@@ -113,20 +113,35 @@ body {
 }
 
 
+/* Estilos do Dashboard de Relatórios */
+#acertosChart {
+    max-height: 400px;
+}
 
 
 
-/* Ocultar o botão "Voltar ao Ranking" na impressão */
+
+/* Ocultar o botão "Voltar ao Ranking" na impressão e navbar*/
 @media print {
     .text-center.mt-3 {
-        display: none;
+        display: none; /* Oculta o botão "Voltar ao Ranking" */
     }
-    /* Opcional: Ajustar margens para impressão */
+    .navbar {
+        display: none; /* Oculta a navbar */
+    }
     .certificate-container {
         padding: 0;
-        margin: 0;
+        margin: 0; /* Remove margens e padding do container do certificado */
+    }
+
+    .certificate-border {
+        background-image: url('/static/images/watermark.png');     /*Testar fundo para o certificado*/
+        background-size: cover;
     }
     body {
-        margin: 0;
+        margin: 0; /* Remove margens do corpo */
+    }
+    @page {
+        size: landscape; /* Define o layout em paisagem */
     }
 }

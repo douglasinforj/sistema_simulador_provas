@@ -64,7 +64,7 @@ def iniciar_prova(request):
             messages.error(request, 'Não há questões suficientes na categoria selecionada.')
             return render(request, 'prova/iniciar_prova.html', {'categorias': Categoria.objects.all()})
 
-        questoes_selecionadas = random.sample(questoes, 4)
+        questoes_selecionadas = random.sample(questoes, 8)
         try:
             prova = Prova.objects.create(
                 candidato_nome=candidato_nome,
@@ -209,3 +209,29 @@ def emitir_certificado(request, prova_uuid):
     response = HttpResponse(content_type='text/html')
     response.write(html_string)
     return response
+
+
+@login_required
+def reports(request):
+    # Calcular índice de acertos por categoria
+    categorias = Categoria.objects.all()
+    data = []
+    for categoria in categorias:
+        provas = Prova.objects.filter(categoria=categoria)
+        total_respostas = 0
+        respostas_corretas = 0
+        for prova in provas:
+            escolhas = EscolhaCandidato.objects.filter(prova=prova)
+            total_respostas += escolhas.count()
+            respostas_corretas += escolhas.filter(alternativa__is_correct=True).count()
+        indice = (respostas_corretas / total_respostas * 100) if total_respostas > 0 else 0
+        data.append({
+            'categoria': categoria.nome,
+            'indice': round(indice, 2)
+        })
+    
+    context = {
+        'data': data
+    }
+    return render(request, 'prova/reports.html', context)
+    
