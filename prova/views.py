@@ -64,7 +64,7 @@ def iniciar_prova(request):
             messages.error(request, 'Não há questões suficientes na categoria selecionada.')
             return render(request, 'prova/iniciar_prova.html', {'categorias': Categoria.objects.all()})
 
-        questoes_selecionadas = random.sample(questoes, 8)
+        questoes_selecionadas = random.sample(questoes, 15)     #Informa a quantidade de questões que serão randomizadas na prova, deve ser menor que a quantidade total no banco
         try:
             prova = Prova.objects.create(
                 candidato_nome=candidato_nome,
@@ -234,4 +234,35 @@ def reports(request):
         'data': data
     }
     return render(request, 'prova/reports.html', context)
+
+
+@login_required
+def ranking_detalhes(request, prova_uuid):
+    prova = get_object_or_404(Prova, uuid=prova_uuid)
+    escolhas = EscolhaCandidato.objects.filter(prova=prova)
+    detalhes = []
+
+    for questao in prova.questoes.all():
+        escolhas_questao = escolhas.filter(alternativa__questao=questao)
+        alternativas_selecionadas = [e.alternativa for e in escolhas_questao]
+        corretas = questao.alternativas.filter(is_correct=True)
+        is_correct = (
+            escolhas_questao.exists() and
+            all(e.alternativa.is_correct for e in escolhas_questao) and
+            len(escolhas_questao) == corretas.count()
+        )
+        detalhes.append({
+            'questao': questao,
+            'alternativas': questao.alternativas.all(),
+            'selecionadas': alternativas_selecionadas,
+            'is_correct': is_correct,
+            'corretas': corretas
+        })
+
+    context = {
+        'prova': prova,
+        'detalhes': detalhes
+    }
+    return render(request, 'prova/ranking_detalhes.html', context)
+
     

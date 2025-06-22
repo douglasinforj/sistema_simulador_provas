@@ -15,7 +15,7 @@
         <tbody>
             {% for prova in provas %}
                 <tr>
-                    <td>{{ prova.candidato_nome }}</td>
+                    <td><a href="{% url 'ranking_detalhes' prova_uuid=prova.uuid %}">{{ prova.candidato_nome }}</a></td>
                     <td>{{ prova.candidato_cpf }}</td>
                     <td>{{ prova.categoria.nome }}</td>
                     <td>{{ prova.nota|floatformat:2 }}</td>

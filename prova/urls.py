@@ -9,5 +9,6 @@ urlpatterns = [
     path('certificado/<uuid:prova_uuid>/', views.emitir_certificado, name='emitir_certificado'),
     path('administrador/', views.administrador, name='administrador'),
     path('reports/', views.reports, name='reports'),
+    path('ranking_detalhes/<uuid:prova_uuid>/', views.ranking_detalhes, name='ranking_detalhes'),
     
 ]

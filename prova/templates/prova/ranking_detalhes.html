@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 prova-detalhes-container">
+    <h2>Detalhes da Prova</h2>
+    <div class="card prova-detalhes-card">
+        <div class="card-body">
+            <h3>{{ prova.candidato_nome }} - {{ prova.categoria.nome }}</h3>
+            <p><strong>CPF:</strong> {{ prova.candidato_cpf }}</p>
+            <p><strong>Nota:</strong> {{ prova.nota|floatformat:2 }}</p>
+            <p><strong>Data:</strong> {{ prova.data_realizacao|date:"d/m/Y H:i" }}</p>
+            <hr>
+            <h4>Questões e Respostas</h4>
+            {% for detalhe in detalhes %}
+            <div class="questao-item {% if detalhe.is_correct %}acertada{% else %}errada{% endif %}">
+                <h5>Questão {{ forloop.counter }}</h5>
+                <p><strong>Enunciado:</strong> {{ detalhe.questao.enunciado}}</p>
+                <h6>Alternativas:</h6>
+                <ul>
+                    {% for alternativa in detalhe.alternativas %}
+                    <li>
+                        {{ alternativa.texto }}
+                        {% if alternativa in detalhe.selecionadas %}
+                            <span class="badge {% if alternativa.is_correct %}bg-success{% else %}bg-danger{% endif %}">
+                                Selecionada {% if alternativa.is_correct %}(Correta){% else %}(Errada){% endif %}
+                            </span>
+                        {% endif %}
+                        {% if alternativa in detalhe.corretas and alternativa not in detalhe.selecionadas %}
+                            <span class="badge bg-info">Correta (Não selecionada)</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                <p><strong>Status:</strong> 
+                    <span class="{% if detalhe.is_correct %}text-success{% else %}text-danger{% endif %}">
+                        {{ detalhe.is_correct|yesno:"Acertada,Errada" }}
+                    </span>
+                </p>
+            </div>
+            {% empty %}
+            <p>Nenhuma questão encontrada.</p>
+            {% endfor %}
+            <div class="text-center mt-4">
+                <button onclick="window.print()" class="btn btn-primary">Imprimir Prova</button>
+                <a href="{% url 'ranking' %}" class="btn btn-secondary">Voltar ao Ranking</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

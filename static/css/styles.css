@@ -145,3 +145,46 @@ body {
         size: landscape; /* Define o layout em paisagem */
     }
 }
+
+
+/* Estilos da Página de Detalhes da Prova */
+.prova-detalhes-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.prova-detalhes-card {
+    padding: 20px;
+}
+
+.questao-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.questao-item h5 {
+    margin-bottom: 10px;
+}
+
+.questao-item ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.questao-item li {
+    margin-bottom: 5px;
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.badge.bg-info {
+    background-color: #17a2b8 !important;
+}
