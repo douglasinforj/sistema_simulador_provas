@@ -265,4 +265,11 @@ def ranking_detalhes(request, prova_uuid):
     }
     return render(request, 'prova/ranking_detalhes.html', context)
 
+
+# área teórica:
+
+@login_required
+def menu_teorico(request):
+    return render(request, 'prova/menu_teorico.html')
+
     
