@@ -7,6 +7,22 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nome
 
+class Topico(models.Model):
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='topicos')
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField(blank=True, help_text="Descrição geral do tópico")
+    def __str__(self):
+        return self.nome
+    
+class Subtopico(models.Model):
+    topico = models.ForeignKey(Topico, on_delete=models.CASCADE, related_name='subtopicos')
+    nome = models.CharField(max_length=200)
+    texto_teorico = models.TextField(help_text="Conteúdo teórico detalhado do subtema")
+    def __str__(self):
+        return f"{self.topico.nome} - {self.nome}"
+
+
+
 class Questao(models.Model):
     enunciado = models.TextField()
     imagem = models.ImageField(upload_to='questoes/', blank=True, null=True)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import re
 from django.contrib import messages
-from .models import Categoria, Questao, Prova, Alternativa, EscolhaCandidato
+from .models import Categoria, Questao, Prova, Alternativa, EscolhaCandidato, Subtopico
 import random
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
@@ -103,10 +103,13 @@ def resultado_prova(request, prova_uuid):
     return render(request, 'prova/resultado_prova.html', {'prova': prova})
 
 
-@login_required
 def ranking(request):
+    categoria_id = request.GET.get('categoria')
     provas = Prova.objects.all().order_by('-nota', 'data_realizacao')
-    return render(request, 'prova/ranking.html', {'provas': provas})
+    if categoria_id:
+        provas = provas.filter(categoria_id=categoria_id)
+    categorias = Categoria.objects.all()
+    return render(request, 'prova/ranking.html', {'provas': provas, 'categorias': categorias})
 
 
 @login_required
@@ -270,6 +273,18 @@ def ranking_detalhes(request, prova_uuid):
 
 @login_required
 def menu_teorico(request):
-    return render(request, 'prova/menu_teorico.html')
+    categorias = Categoria.objects.all().prefetch_related('topicos__subtopicos')
+    context = {
+        'categorias': categorias
+    }
+    return render(request, 'prova/menu_teorico.html', context)
+
+@login_required
+def subtopico_detalhe(request, subtopico_id):
+    subtopico = get_object_or_404(Subtopico, id=subtopico_id)
+    context = {
+        'subtopico': subtopico
+    }
+    return render(request, 'prova/subtopico_detalhe.html', context)
 
     

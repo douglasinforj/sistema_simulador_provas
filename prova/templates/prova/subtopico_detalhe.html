@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 subtopico-detalhe-container">
+    <h2>{{ subtopico.topico.nome }} - {{ subtopico.nome }}</h2>
+    <div class="card subtopico-card">
+        <div class="card-body">
+            <h5>Conteúdo Teórico</h5>
+            <div class="teorico-texto">
+                {{ subtopico.texto_teorico|linebreaks }}
+            </div>
+            <div class="text-center mt-4">
+                <button onclick="window.print()" class="btn btn-primary">Imprimir Conteúdo</button>
+                <a href="{% url 'menu_teorico' %}" class="btn btn-secondary">Voltar ao Menu</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

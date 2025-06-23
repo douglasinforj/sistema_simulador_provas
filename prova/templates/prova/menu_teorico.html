@@ -1,39 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container mt-5">
-    <h2>Painel Administrativo</h2>
+
+<div class="container mt-5 menu-teorico-container">
+    <h2>Menu Teórico</h2>
+    {% for categoria in categorias %}
+    <h3>{{ categoria.nome }}</h3>
     <div class="row">
+        {% for topico in categoria.topicos.all %}
         <div class="col-md-4 mb-4">
-            <div class="card admin-card">
-                <img src="{% static 'images/ranking1.png' %}" class="card-img-top admin-card-img" alt="Ranking">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Ranking e Certificados</h5>
-                    <p class="card-text">Visualize o ranking dos candidatos por nota.</p>
-                    <a href="{% url 'ranking' %}" class="btn btn-primary">Acessar</a>
+            <div class="card topico-card">
+                <div class="card-header" id="heading-{{ topico.id }}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ topico.id }}" aria-expanded="false" aria-controls="collapse-{{ topico.id }}">
+                            {{ topico.nome }}
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapse-{{ topico.id }}" class="collapse" aria-labelledby="heading-{{ topico.id }}">
+                    <div class="card-body">
+                        <p>{{ topico.descricao }}</p>
+                        <h6>Subtópicos:</h6>
+                        <ul class="list-group">
+                            {% for subtopico in topico.subtopicos.all %}
+                            <li class="list-group-item">
+                                <a href="{% url 'subtopico_detalhe' subtopico.id %}">{{ subtopico.nome }}</a>
+                            </li>
+                            {% empty %}
+                            <li class="list-group-item">Nenhum subtema disponível.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card admin-card">
-                <img src="{% static 'images/dados.png' %}" class="card-img-top admin-card-img" alt="Em Desenvolvimento">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Em Desenvolvimento</h5>
-                    <p class="card-text">Novas funcionalidades serão adicionadas aqui.</p>
-                    <a href="#" class="btn btn-secondary disabled">Em Breve</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card admin-card">
-                <img src="{% static 'images/dados.png' %}" class="card-img-top admin-card-img" alt="Em Desenvolvimento">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Em Desenvolvimento</h5>
-                    <p class="card-text">Novas funcionalidades serão adicionadas aqui.</p>
-                    <a href="#" class="btn btn-secondary disabled">Em Breve</a>
-                </div>
-            </div>
-        </div>
+        {% empty %}
+        <p>Nenhum tópico disponível para esta categoria.</p>
+        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endblock %}

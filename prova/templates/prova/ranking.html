@@ -1,31 +1,97 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <h2>Ranking de Candidatos</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Categoria</th>
-                <th>Nota</th>
-                <th>Data</th>
-                <th>Certificado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for prova in provas %}
+<div class="container mt-5 ranking-container">
+    <h2 class="mb-4 text-center">Ranking de Candidatos</h2>
+
+    <div class="mb-3">
+        <form method="GET">
+            <select name="categoria" class="form-select" onchange="this.form.submit()">
+                <option value="">Todas as Categorias</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}" {% if categoria.id|stringformat:"s" == request.GET.categoria %}selected{% endif %}>{{ categoria.nome }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <!-- Tabela para telas grandes -->
+    <div class="table-responsive d-none d-md-table">
+        <table class="table table-striped table-hover table-bordered shadow-sm">
+            <thead class="table-dark">
                 <tr>
-                    <td><a href="{% url 'ranking_detalhes' prova_uuid=prova.uuid %}">{{ prova.candidato_nome }}</a></td>
-                    <td>{{ prova.candidato_cpf }}</td>
-                    <td>{{ prova.categoria.nome }}</td>
-                    <td>{{ prova.nota|floatformat:2 }}</td>
-                    <td>{{ prova.data_realizacao }}</td>
+                    <th scope="col" aria-sort="none">Nome</th>
+                    <th scope="col" aria-sort="none">CPF</th>
+                    <th scope="col" aria-sort="none">Categoria</th>
+                    <th scope="col" aria-sort="none">Nota</th>
+                    <th scope="col" aria-sort="none">Data</th>
+                    <th scope="col" aria-sort="none">Certificado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prova in provas %}
+                <tr>
                     <td>
-                        <a href="{% url 'emitir_certificado' prova.uuid %}" class="btn btn-sm btn-success">Visualizar</a>
-                        <a href="{% url 'emitir_certificado' prova.uuid %}?pdf=true" class="btn btn-sm btn-primary">PDF</a>
+                        <a href="{% url 'ranking_detalhes' prova_uuid=prova.uuid %}" class="text-decoration-none text-primary" aria-label="Ver detalhes de {{ prova.candidato_nome }}">
+                            {{ prova.candidato_nome|truncatechars:30 }}
+                        </a>
+                    </td>
+                    <td>{{ prova.candidato_cpf }}</td>
+                    <td class="categoria-col">{{ prova.categoria.nome }}</td> <!-- Removido truncatechars -->
+                    <td>{{ prova.nota|floatformat:2 }}</td>
+                    <td>{{ prova.data_realizacao|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Ações para {{ prova.candidato_nome }}">
+                            <a href="{% url 'emitir_certificado' prova.uuid %}" class="btn btn-sm btn-success me-1" aria-label="Visualizar certificado">
+                                <i class="bi bi-eye"></i> Visualizar
+                            </a>
+                            <a href="{% url 'emitir_certificado' prova.uuid %}?pdf=true" class="btn btn-sm btn-primary" aria-label="Baixar PDF do certificado">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </a>
+                        </div>
                     </td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">Nenhuma prova encontrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Cards para telas pequenas -->
+    <div class="d-md-none">
+        {% for prova in provas %}
+        <div class="card mb-3 shadow-sm ranking-card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'ranking_detalhes' prova_uuid=prova.uuid %}" class="text-decoration-none text-primary" aria-label="Ver detalhes de {{ prova.candidato_nome }}">
+                        {{ prova.candidato_nome|truncatechars:30 }}
+                    </a>
+                </h5>
+                <p class="card-text mb-1"><strong>CPF:</strong> {{ prova.candidato_cpf }}</p>
+                <p class="card-text mb-1"><strong>Categoria:</strong> {{ prova.categoria.nome }}</p> <!-- Removido truncatechars -->
+                <p class="card-text mb-1"><strong>Nota:</strong> {{ prova.nota|floatformat:2 }}</p>
+                <p class="card-text mb-1"><strong>Data:</strong> {{ prova.data_realizacao|date:"d/m/Y H:i" }}</p>
+                <div class="d-flex justify-content-start mt-2">
+                    <a href="{% url 'emitir_certificado' prova.uuid %}" class="btn btn-sm btn-success me-2" aria-label="Visualizar certificado">
+                        <i class="bi bi-eye"></i> Visualizar
+                    </a>
+                    <a href="{% url 'emitir_certificado' prova.uuid %}?pdf=true" class="btn btn-sm btn-primary" aria-label="Baixar PDF do certificado">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info text-center" role="alert">
+            Nenhuma prova encontrada.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Incluir Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 {% endblock %}

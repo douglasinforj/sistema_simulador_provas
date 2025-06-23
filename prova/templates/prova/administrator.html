@@ -14,6 +14,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-4 mb-4">
             <div class="card admin-card">
                 <img src="{% static 'images/relatorios.png' %}" class="card-img-top admin-card-img" alt="Relatórios">
@@ -24,6 +25,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card admin-card">
+                <img src="{% static 'images/relatorios.png' %}" class="card-img-top admin-card-img" alt="Conteúdo Teórico">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Conteúdo Teórico</h5>
+                    <p class="card-text">Acesse o conteúdo teórico organizado.</p>
+                    <a href="{% url 'menu_teorico' %}" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-4 mb-4">
             <div class="card admin-card">
                 <img src="{% static 'images/dados.png' %}" class="card-img-top admin-card-img" alt="Em Desenvolvimento">
@@ -34,6 +47,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 {% endblock %}

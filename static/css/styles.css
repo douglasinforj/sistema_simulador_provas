@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-  
 }
 .card {
     border-radius: 10px;
@@ -12,6 +11,13 @@ body {
 }
 .btn-primary:hover {
     background-color: #0056b3;
+}
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+.btn-success:hover {
+    background-color: #218838;
 }
 #timer {
     font-size: 1.2em;
@@ -25,67 +31,56 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
-
 .certificate-border {
-    border: 5px solid #FFD700; /* Borda dourada */
+    border: 5px solid #FFD700;
     background-color: #F8F8F8;
     padding: 30px;
     position: relative;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
-
 .certificate-content {
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
 }
-
 .certificate-logo {
     width: 100px;
     margin-bottom: 20px;
 }
-
 .certificate-title {
     font-size: 36px;
-    color: #003087; /* Azul escuro */
+    color: #003087;
     margin-bottom: 10px;
     font-weight: bold;
 }
-
 .certificate-subtitle {
     font-size: 20px;
     color: #333;
     margin-bottom: 30px;
 }
-
 .certificate-text {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 40px;
 }
-
 .certificate-signatures {
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
     padding: 0 50px;
 }
-
 .signature {
     width: 40%;
     text-align: center;
 }
-
 .signature hr {
     border: 0;
     border-top: 1px solid #000;
     margin-bottom: 10px;
 }
-
 .signature p {
     margin: 0;
     font-size: 14px;
 }
-
 .certificate-id {
     font-size: 12px;
     color: #666;
@@ -97,94 +92,239 @@ body {
 .admin-card {
     transition: transform 0.2s;
 }
-
 .admin-card:hover {
     transform: scale(1.05);
 }
-
-
-
 .admin-card-img {
     width: 100%;
-    height: 200px; /* Altura ajustada para proporção de 800x600 */
+    height: 200px;
     object-fit: cover;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-
 
 /* Estilos do Dashboard de Relatórios */
 #acertosChart {
     max-height: 400px;
 }
 
-
-
-
-/* Ocultar o botão "Voltar ao Ranking" na impressão e navbar*/
-@media print {
-    .text-center.mt-3 {
-        display: none; /* Oculta o botão "Voltar ao Ranking" */
-    }
-    .navbar {
-        display: none; /* Oculta a navbar */
-    }
-    .certificate-container {
-        padding: 0;
-        margin: 0; /* Remove margens e padding do container do certificado */
-    }
-
-    .certificate-border {
-        background-image: url('/static/images/watermark.png');     /*Testar fundo para o certificado*/
-        background-size: cover;
-    }
-    body {
-        margin: 0; /* Remove margens do corpo */
-    }
-    @page {
-        size: landscape; /* Define o layout em paisagem */
-    }
-}
-
-
 /* Estilos da Página de Detalhes da Prova */
 .prova-detalhes-container {
     max-width: 900px;
     margin: 0 auto;
 }
-
 .prova-detalhes-card {
     padding: 20px;
 }
-
 .questao-item {
     margin-bottom: 20px;
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
 .questao-item h5 {
     margin-bottom: 10px;
 }
-
+.questao-enunciado {
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
 .questao-item ul {
     list-style-type: none;
     padding-left: 0;
 }
-
 .questao-item li {
     margin-bottom: 5px;
 }
-
 .badge.bg-success {
     background-color: #28a745 !important;
 }
-
 .badge.bg-danger {
     background-color: #dc3545 !important;
 }
-
 .badge.bg-info {
     background-color: #17a2b8 !important;
+}
+
+/* Estilos para Drag and Drop */
+.drag-drop-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.drag-items, .drop-targets {
+    width: 45%;
+}
+.drag-item {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: move;
+}
+.drop-target {
+    margin-bottom: 15px;
+}
+.drop-target span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.drop-area {
+    min-height: 50px;
+    border: 2px dashed #ccc;
+    padding: 10px;
+}
+.drag-drop-result ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+.drag-drop-result li {
+    margin-bottom: 5px;
+}
+
+/* Estilos para Menu Teórico */
+.menu-teorico-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.topico-card {
+    transition: transform 0.2s;
+}
+.topico-card:hover {
+    transform: scale(1.02);
+}
+.topico-card .btn-link {
+    color: #007bff;
+    text-decoration: none;
+    width: 100%;
+    text-align: left;
+}
+.topico-card .btn-link:hover {
+    color: #0056b3;
+}
+.topico-card .list-group-item a {
+    color: #333;
+    text-decoration: none;
+}
+.topico-card .list-group-item a:hover {
+    color: #007bff;
+}
+
+/* Estilos para Subtópico Detalhe */
+.subtopico-detalhe-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.subtopico-card {
+    padding: 20px;
+}
+.teorico-texto {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Estilos para Ranking */
+.ranking-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.ranking-card {
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+.ranking-card:hover {
+    transform: scale(1.02);
+}
+.ranking-card .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+.ranking-card .card-text {
+    font-size: 0.9rem;
+}
+.table-responsive {
+    border-radius: 8px;
+    overflow-x: auto;
+}
+.table {
+    margin-bottom: 0;
+}
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 14px; /* Reduzido de ~16px para 13px */
+    padding: 0.5rem; /* Reduzido para compactar */
+}
+.table thead th {
+    background-color: #003087;
+    color: white;
+    border-color: #002060;
+    font-size: 14px; /* Cabeçalho ligeiramente maior */
+}
+.table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+.btn-group .btn {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+}
+.btn-group .bi {
+    margin-right: 0.3rem;
+}
+.categoria-col {
+    min-width: 200px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 991px) {
+    .categoria-col {
+        min-width: 150px;
+    }
+}
+@media (max-width: 767px) {
+    .ranking-card .card-text {
+        word-wrap: break-word;
+        white-space: normal;
+        font-size: 0.85rem; /* Mantém legibilidade em cards */
+    }
+}
+
+/* Ocultar elementos na impressão */
+@media print {
+    .text-center.mt-3, .text-center.mt-4, .btn-group {
+        display: none;
+    }
+    .navbar {
+        display: none;
+    }
+    .certificate-container, .prova-detalhes-container, .menu-teorico-container, .subtopico-detalhe-container, .ranking-container {
+        padding: 0;
+        margin: 0;
+    }
+    body {
+        margin: 0;
+    }
+    @page {
+        size: landscape;
+    }
+    .drag-item, .drop-area {
+        border: 1px solid #000;
+        padding: 5px;
+    }
+    .table {
+        width: 100%;
+        font-size: 11px; /* Reduzido para impressão */
+    }
+    .table th, .table td {
+        padding: 0.4rem; /* Compactado para impressão */
+    }
+    .categoria-col {
+        min-width: 250px;
+        word-wrap: break-word;
+        white-space: normal;
+    }
 }

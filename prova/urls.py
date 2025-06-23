@@ -10,6 +10,7 @@ urlpatterns = [
     path('administrador/', views.administrador, name='administrador'),
     path('reports/', views.reports, name='reports'),
     path('ranking_detalhes/<uuid:prova_uuid>/', views.ranking_detalhes, name='ranking_detalhes'),
-    path('menu_teorico/', views.menu_teorico, name='menu_teorico'),
-    
+    path('teorico/', views.menu_teorico, name='menu_teorico'),
+    path('teorico/subtopico/<int:subtopico_id>/', views.subtopico_detalhe, name='subtopico_detalhe'),
 ]
+    
