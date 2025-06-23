@@ -64,7 +64,7 @@ def iniciar_prova(request):
             messages.error(request, 'Não há questões suficientes na categoria selecionada.')
             return render(request, 'prova/iniciar_prova.html', {'categorias': Categoria.objects.all()})
 
-        questoes_selecionadas = random.sample(questoes, 15)     #Informa a quantidade de questões que serão randomizadas na prova, deve ser menor que a quantidade total no banco
+        questoes_selecionadas = random.sample(questoes, 10)     #Informa a quantidade de questões que serão randomizadas na prova, deve ser menor que a quantidade total no banco
         try:
             prova = Prova.objects.create(
                 candidato_nome=candidato_nome,
